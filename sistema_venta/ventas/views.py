@@ -2,11 +2,11 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-
 from .models import Categoria,Cliente,Detalleventa,Empleado,Pago,Producto,Tipopago,Venta,Empleado
 from django.db.models import Q
-
 from datetime import datetime
+
+##Login-------------------------------------
 
 def homes(request): 
     return render(request, 'Home.html')
@@ -56,6 +56,8 @@ def profile(request):
 def signout(request):
     logout(request)
     return redirect('/')
+
+##Productos--------------------------------
 
 def productos(request):
     productos=Producto.objects.all()
@@ -194,17 +196,3 @@ def editar_venta(request, id_venta):
 
     return render(request, 'VentaEditar.html', {'venta': venta, 'empleados': empleados, 'clientes': clientes})
 # BUSCAR-----------------
-
-
-def buscarespecialidad(request):
-    buscar_especialidad = request.POST.get("buscar")
-    especialidades = Especialidad.objects.all()
-
-    if buscar_especialidad:
-        especialidades = Especialidad.objects.filter(
-            Q(nombre__icontains=buscar_especialidad)
-        ).distinct()
-    datos = {
-        'especialidades': especialidades
-    }
-    return render(request, 'ListaEspecialidad.html', datos)

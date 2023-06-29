@@ -5,6 +5,7 @@ from . import views
 app_name = 'ventas'
 urlpatterns = [
 
+    ##Login--------------------------------------
     path('', views.homes, name='home'),
     path('signin/', views.signin, name='signin'),
     path('signout/', views.signout, name='signout'),
@@ -13,10 +14,11 @@ urlpatterns = [
 
     ##Producto-----------------------------------------
     path('dataproducto/',views.listarproductos,name='listarproductos'),
-    ##path('producto/',views.buscarproductos,name='home'),
     path('registrarproducto',views.registrarproductos,name='registrarproducto'),
     path('productos', views.productos, name='productos'),
     path('editarproducto/<str:idProducto>/', views.editarproductos, name='editarproducto'),
+    
+    ##Ventas-------------------------------------------------
     path('dtventas/', views.listadoventa, name='dtventas'),
     path('registrarventa/', views.registrarventa, name='registrarventa'),
     path('dtventas/eliminarventa/<idVenta>', views.eliminarventa),
