@@ -1,0 +1,32 @@
+{% extends './base.html' %}
+  
+{% block title %}Login{% endblock %}
+
+
+{% block content %}
+<form class="d-flex" role="search">
+  {% if user.is_authenticated %}
+   
+    <h5>Hi {{ user.username }}!</h5>
+      <a href="/signout" class="btn btn-danger">Logout</a>
+      
+    {% else %}
+      <a href="/signin" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span>Login</a> 
+      <a href="/signup" class="btn btn-success">Signup</a>
+    {% endif %}
+</form> 
+{% endblock %}
+
+  
+
+{%block body%}
+<main role="main" class="container my-auto">
+    <div class="row">
+        <div id="login" class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12">
+            <h2 class="text-center">Bienvenido de nuevo</h2>
+            <img class="img-fluid mx-auto d-block rounded"
+                src="https://picsum.photos/id/870/300/200" />
+        </div>
+    </div>
+</main>
+{% endblock %}

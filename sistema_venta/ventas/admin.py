@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Producto, Tipopago, Categoria, Cliente, Empleado, Pago, Venta, Detalleventa
 # Register your models here.
 
+#visualizacion en /admin
 admin.site.register(Producto)
 admin.site.register(Tipopago)
 admin.site.register(Categoria)
