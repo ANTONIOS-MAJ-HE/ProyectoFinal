@@ -1,0 +1,100 @@
+{% extends './base.html' %}
+
+{% block title %}Registrar VENTA {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2> Nueva  Venta</h2><br>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarventa/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtcodigo" 
+                        id="txtcodigo" placeholder="Codigo">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="date" class="form-control" name="txtfecha"  
+                        id="txtfecha" placeholder="Fecha">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="cliente">Cliente:</label>
+                        <select name="cliente" id="cliente" class="form-control">
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.idCliente }}">{{ cliente.nombres }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="empleado">Empleado:</label>
+                        <select name="empleado" id="empleado" class="form-control">
+                            {% for empleado in empleados %}
+                               <option value="{{ empleado.idEmpleado }}">{{ empleado.nombres }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                     <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtsubtotal" required 
+                        id="subtotal" placeholder="Subtotal">
+                    </div>
+                     <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtigv" required 
+                        id="txtigv" placeholder="Igv">
+                    </div>
+                     <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtmonto" required 
+                        id="txtmonto" placeholder="Monto">
+                    </div>
+                   
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="reset" class="btn btn-success">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="">
+            <h2>Lista de Ventas</h2>
+            <table class="table align-middle">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th scope="col">ID</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Empleado</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Igv</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col" colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in ventas %}
+                    <tr class="text-center">
+                        <th scope="row">{{v.idVenta}}</th>
+                        <td>{{v.fecha}}</td>
+                        <td>{{v.idcliente}}</td>
+                        <td>{{v.idempleado}}</td>
+                        <td>{{v.subtotal}}</td>
+                        <td>{{v.igv}}</td>
+                        <td>{{v.monto}}</td>
+                        <td>
+                            <i class="bi bi-trash3"></i>
+                            <a href="editarventa/{{v.idVenta}}"> <i data-feather="edit"></i>Editar</a>
+                            <a href="eliminarventa/{{v.idVenta}}" style="color: red;"><i data-feather="trash-2"></i>Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
