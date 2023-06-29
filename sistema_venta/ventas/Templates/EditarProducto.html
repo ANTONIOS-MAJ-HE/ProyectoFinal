@@ -1,0 +1,58 @@
+{% extends './Base.html' %}
+
+{% block title %}Lista de Producto{% endblock %}
+
+{% block body %}
+
+<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <h2>Ingreso de Cursos - Tecsup</h2>
+    <div class="card">
+        <div class="card-body">
+            <form action="/updatecurso/{{producto.idProducto}}" method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="txtcodigo">Codigo</label>
+                    <input type="text" class="form-control" name="txtcodigo" 
+                    id="txtcodigo" value="{{producto.idProducto}}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Nombre</label>
+                    <input type="text" class="form-control" name="txtnombre"  
+                    id="txtnombre" value="{{producto.nombre}}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Precio</label>
+                    <input type="text" name="numcreditos" class="form-control"
+                    id="numcreditos"  value="{{producto.precio}}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Stock</label>
+                    <input type="text" name="numcreditos" class="form-control"
+                    id="numcreditos"  value="{{producto.stock}}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Categoria</label>
+                    <select id="txtespecialidad" name="txtespecialidad" class="form-control">
+                        {% for categoria in categorias %}
+                        <option value="{{ categoria.idCategoria }}" 
+                        {% if producto.categoria.idCategoria == idCategoria.idCategoria %}selected{% endif %}>
+                        {{ categoria.nombre }}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="">Descripcion</label>
+                    <input type="text" name="numcreditos" class="form-control"
+                    id="numcreditos"  value="{{producto.descripcion}}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="reset" class="btn btn-success">Limpiar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

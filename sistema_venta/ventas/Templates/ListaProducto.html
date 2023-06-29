@@ -1,0 +1,49 @@
+{% extends 'Base.html' %}
+{% block title %}Gestión de Productos{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block body %}
+  <div class="col-sm-12 col-md-6 col-lg-12 col-xl-12">
+    <form action="{% url 'buscar_producto' %}" class="d-none d-sm-inline-block 
+    form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST">
+        <!--{% csrf_token %}-->
+        <div class="input-group">
+          <input type="text" class="form-control bg-light border-0 small" 
+          placeholder="Buscar..." name="buscar" value="{{ request.POST.buscar }}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </div>
+        </div>
+      </form>
+    <h2>Lista de Productos</h2>
+    <table class="table table-primary">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Créditos</th>
+          <th>Especialidad</th>
+          <th>Docente</th>
+          <th colspan="2">Opciones de Manejo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for curso in cursos %}
+        <tr>
+          <td>{{ curso.codigo }}</td>
+          <td>{{ curso.nombre }}</td>
+          <td>{{ curso.creditos }}</td>
+          <td>{{ curso.especialidad.nombre }}</td>
+          <td>{{ curso.docente.apellido }}, {{ curso.docente.nombre }}</td>
+          <td><a href="{% url 'edicioncurso' codigo=curso.codigo %}" class="btn btn-info">Editar</a></td>
+          <td><a href="{% url 'eliminarcurso' codigo=curso.codigo %}" class="btn btn-danger">Eliminar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

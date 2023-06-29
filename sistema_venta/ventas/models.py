@@ -74,7 +74,7 @@ class Pago(models.Model):
     idTipo = models.ForeignKey(Tipopago, on_delete=models.CASCADE)
     cvc = models.IntegerField()
 
-    def __str__(self):
+    def __int__(self):
         return self.numero_tarjeta
     
 

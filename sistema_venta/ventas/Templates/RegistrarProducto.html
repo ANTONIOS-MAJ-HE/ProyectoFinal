@@ -1,0 +1,93 @@
+{% extends './Base.html' %}
+
+{% block title %}Registrar Producto {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Registrar Producto</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarcurso" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtcodigo" 
+                        id="txtcodigo" placeholder="Codigo">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtnombre"  
+                        id="txtnombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" name="txtprecio" class="form-control"
+                        id="txtprecio" value="1" placeholder="Creditos">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" name="txtstock" class="form-control"
+                        id="txtstock" value="1" placeholder="Stock">
+                    </div>
+
+                    <div class="form-group">
+                        <select name="txtcategoria" id="txtcategoria" class="form-control">
+                          <option value="">Seleccionar Especialidad</option>
+                          {% for c in categorias %}
+                            <option value="{{ c.idCategoria }}" 
+                                {% if producto.categoria.idCategoria == idCategoria.idCategoria %}
+                                    selected
+                                {% endif %}>{{ c.nombre }}
+                            </option>
+                          {% endfor %}
+                        </select>
+                      </div>
+
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="txtdescripcion"  
+                        id="txtdescripcion" placeholder="Descripcion">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="reset" class="btn btn-success">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="">
+            <h2>Lista de Datos</h2>
+            <table class="table align-middle">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">categoria</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col" colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in productos %}
+                    <tr class="text-center">
+                        <th scope="row">{{p.idProducto}}</th>
+                        <td>{{p.nombre}}</td>
+                        <td>S/{{p.precio}}</td>
+                        <td>{{p.stock}}</td>
+                        <td>{{p.idCategoria.nombre }}</td>
+                        <td>{{p.descripcion}}</td>
+                        <td>
+                            <i class="bi bi-trash3"></i>
+                            <a href="{% url 'editarproducto' idProducto=p.idProducto %}"><i data-feather="edit"></i></a>
+                            <a href="eliminarcurso/{{p.idProducto}}" style="color: red;"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
