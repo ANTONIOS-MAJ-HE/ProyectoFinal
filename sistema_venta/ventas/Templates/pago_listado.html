@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Listado de Pagos{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h2 class="text-center">Listado de pagos</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="txid" class="form-label">Código</label>
+            <input type="text" class="form-control" name="buscar" value="{{ request.POST.buscar }}">
+          </div>
+          <button type="submit" class="btn btn-primary"><i data-feather="edit"></i></button>
+        </form>
+      </div>
+    </div>
+
+    {% if pagos %}
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table align-middle">
+          <thead class="thead-dark">
+            <tr class="text-center">
+              <th scope="col">ID</th>
+              <th scope="col">Número de tarjeta</th>
+              <th scope="col">Fecha de Vencimiento</th>
+              <th scope="col">Tipo de pago</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in pagos %}
+            <tr class="text-center">
+              <th scope="row">{{ p.idPago }}</th>
+              <td>{{ p.numero_tarjeta }}</td>
+              <td>{{ p.fecha_vencimiento }}</td>
+              <td>{{ p.idTipo }}</td>
+              <td>
+                <i class="bi bi-trash3"></i>
+                <a href="editarpago/{{ p.idPago }}"><i data-feather="edit"></i>Editar</a>
+                <a href="eliminarpago/{{ p.idPago }}" style="color: brown;"><i data-feather="trash-2"></i>Eliminar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <h1>No hay registros</h1>
+    {% endif %}
+  </div>
+{% endblock %}
+

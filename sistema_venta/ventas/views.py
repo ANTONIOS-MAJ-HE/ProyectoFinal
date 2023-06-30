@@ -6,6 +6,7 @@ from .models import Categoria,Cliente,Detalleventa,Empleado,Pago,Producto,Tipopa
 from django.db.models import Q
 from datetime import datetime
 
+from .forms import PagoForm
 ##Login-------------------------------------
 
 def homes(request): 
@@ -113,10 +114,10 @@ def buscarproductos(request):
     return render(request,'ListaProductos.html',datos)
 
 
-# ListadoVenta
+# VENTAS--------------------------------
 def listadoventa(request):
     venta_list = Venta.objects.all()
-    return render(request, "VentaListado.html", {"ventas": venta_list})
+    return render(request, "VentaRegistro.html", {"ventas": venta_list})
 
 
 def registrarventa(request):
@@ -195,4 +196,65 @@ def editar_venta(request, id_venta):
         return redirect('/dtventas/', id_venta=venta.idVenta)
 
     return render(request, 'VentaEditar.html', {'venta': venta, 'empleados': empleados, 'clientes': clientes})
-# BUSCAR-----------------
+
+
+# ---------------------PAGO--------------
+
+
+def listado_pago(request):
+    pagos = Pago.objects.all()
+    return render(request, 'pago_registrar.html', {"pagos": pagos})
+
+
+def registrar_pago(request):
+    if request.method == 'POST':
+        numero_tarjeta = request.POST.get('numero_tarjeta')
+        fecha_vencimiento = request.POST.get('fecha_vencimiento')
+        id_tipo = request.POST.get('tpago')
+        cvc = request.POST.get('cvc')
+
+        # Realiza la lógica de validación y creación del objeto Pago
+        # Puedes agregar más validaciones según tus necesidades
+
+        tipo_pago = Tipopago.objects.get(idTipopago=id_tipo)
+        pago = Pago(numero_tarjeta=numero_tarjeta,
+                    fecha_vencimiento=fecha_vencimiento, tipo_pago=tipo_pago, cvc=cvc)
+        pago.save()
+
+        # Redirige a la página de listado de pagos
+        return redirect('pagos')
+
+    # Si la solicitud no es POST, renderiza el formulario de registro de pago
+    tpagos = Tipopago.objects.all()
+    return render(request, 'pago_registrar.html', {'tpagos': tpagos})
+
+
+
+
+
+
+def editar_pago(request, idPago):
+    pago = get_object_or_404(Pago, idPago=idPago)
+    if request.method == 'POST':
+        form = PagoForm(request.POST, instance=pago)
+        if form.is_valid():
+            form.save()
+            return redirect('listado_pago')
+    else:
+        form = PagoForm(instance=pago)
+    return render(request, 'pago_editar.html', {'form': form, 'pago': pago})
+
+
+def eliminar_pago(request, idPago):
+    pago = get_object_or_404(Pago, idPago=idPago)
+    pago.delete()
+    return redirect('listado_pago')
+
+
+
+
+
+
+
+
+

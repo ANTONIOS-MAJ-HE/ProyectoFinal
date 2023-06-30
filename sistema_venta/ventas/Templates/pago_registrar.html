@@ -1,0 +1,82 @@
+{% extends './base.html' %}
+
+{% block title %}
+  Registrar Pago
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <h2>Registrar Pago</h2><br>
+    <div class="card">
+      <div class="card-body">
+        <form action="/registrar_pago/" method="POST">
+          {% csrf_token %}
+          <div class="form-group mb-3">
+            <label for="txtnumero" class="form-label">Número de Tarjeta</label>
+            <input type="text" class="form-control" name="numero_tarjeta">
+          </div>
+          <div class="form-group mb-3">
+            <label for="txtfecha" class="form-label">Fecha de Vencimiento</label>
+            <input type="date" class="form-control" name="fecha_vencimiento">
+          </div>
+
+          <div class="form-group mb-3">
+              <label for="tpago">Tipo de Pago:</label>
+              <select name="tpago" id="tpago" class="form-control">
+                {% for tpago in tpagos %}
+                   <option value="{{ tpago.idTipopago }}">{{ tpago.tipo }}</option>
+                {% endfor %}
+             </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="txtcvc" class="form-label">CVC</label>
+            <input type="text" class="form-control" name="cvc">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <div class="">
+      <h2>Listado de Pagos</h2>
+      {% if pagos %}
+        <table class="table align-middle">
+          <thead class="table-dark">
+            <tr class="text-center">
+              <th scope="col">ID</th>
+              <th scope="col">Número de tarjeta</th>
+              <th scope="col">Fecha de Vencimiento</th>
+              <th scope="col">Tipo de pago</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in pagos %}
+              <tr class="text-center">
+                <th scope="row">{{ p.idPago }}</th>
+                <td>{{ p.numero_tarjeta }}</td>
+                <td>{{ p.fecha_vencimiento }}</td>
+                <td>{{ p.idTipo }}</td>
+                <td>
+                  <i class="bi bi-trash3"></i>
+                  <a href="editarpago/{{ p.idPago }}"><i data-feather="edit"></i>Editar</a>
+                  <a href="eliminarpago/{{ p.idPago }}" style="color: brown;"><i data-feather="trash-2"></i>Eliminar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <h4>No hay registros</h4>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

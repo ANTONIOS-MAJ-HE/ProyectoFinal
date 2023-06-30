@@ -1,0 +1,41 @@
+{% extends './base.html' %}
+
+{% block title %}Lista de  Pago{% endblock %}
+
+{% block body %}
+
+
+  <div class="container">
+    <h2 class="text-center">Editar Pago</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3 row">
+        <label for="txtnumero" class="col-sm-2 col-form-label">Número de Tarjeta</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="numero_tarjeta" value="{{ pago.numero_tarjeta }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="txtfecha" class="col-sm-2 col-form-label">Fecha de Vencimiento</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="fecha_vencimiento" value="{{ pago.fecha_vencimiento }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="txttipo" class="col-sm-2 col-form-label">Tipo de Pago</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="idTipo" value="{{ pago.idTipo }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="txtcvc" class="col-sm-2 col-form-label">CVC</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="cvc" value="{{ pago.cvc }}">
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

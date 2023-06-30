@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'sistema_venta.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ventas2023',
+        'NAME': 'ventas2024',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3305',
+        'PORT': '3306',
     }
 }
 
