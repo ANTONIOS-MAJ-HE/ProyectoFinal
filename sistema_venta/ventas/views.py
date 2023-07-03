@@ -5,16 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Categoria,Cliente,Detalleventa,Empleado,Pago,Producto,Tipopago,Venta,Empleado
 from django.db.models import Q
 from datetime import datetime
-
+from django.contrib import messages
 from .forms import PagoForm
-##Login-------------------------------------
 
-def homes(request): 
-    return render(request, 'Home.html')
+##Login-------------------------------------
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('/')
+        return redirect('/signin')
+    
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -23,19 +22,19 @@ def signup(request):
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/')
+            return redirect('/signin')
         else:
+            errors = form.errors
+            for field, error in errors.items():
+                messages.error(request, f"{field}: {error}")
             return render(request, 'Signup.html', {'form': form})
     else:
         form = UserCreationForm()
-        return render(request, 'Signup.html', {'form': form})
-   
-def homes(request): 
-    return render(request, 'Home.html')
+        return render(request, 'Signup.html', {'form': form}) 
 
 def signin(request):
     if request.user.is_authenticated:
-        return render(request, 'Home.html')
+        return render(request, 'Profile.html')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -44,7 +43,7 @@ def signin(request):
             login(request, user)
             return redirect('/profile') #profile
         else:
-            msg = 'Error Login'
+            msg = 'Error Credenciales'
             form = AuthenticationForm(request.POST)
             return render(request, 'Login.html', {'form': form, 'msg': msg})
     else:
@@ -56,7 +55,7 @@ def profile(request):
    
 def signout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/profile')
 
 ##Productos--------------------------------
 
