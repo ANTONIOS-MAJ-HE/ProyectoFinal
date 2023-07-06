@@ -1,0 +1,25 @@
+<body>
+    <h2>Lista de Productos</h2>
+    <h3>Cantidad de Productos : {{count}}</h3>
+        <br>
+    <table  border="1" cellpadding="4">
+        <thead >
+            <tr class="text-center">
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
+                <th scope="col">categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productos %}
+            <tr class="text-center">
+                <td>{{p.nombre}}</td>
+                <td>S/ {{p.precio}}</td>
+                <td>{{p.stock}}</td>
+                <td>{{p.idCategoria.nombre }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>

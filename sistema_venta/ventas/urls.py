@@ -58,5 +58,7 @@ urlpatterns = [
     path('editardeventa/<idDetalle>',views.editardeventa),
     path('editdeventa',views.editdeventa),
     path('registrardeventa',views.registrardeventa),
+    
+    path('lista_productos/', login_required(views.reporte_produto.as_view()), name='reporteproductos'),
 
 ]

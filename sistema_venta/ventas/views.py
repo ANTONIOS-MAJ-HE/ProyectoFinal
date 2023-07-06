@@ -10,6 +10,8 @@ from .forms import PagoForm
 import requests
 from rest_framework import generics
 from .serializers import EmpleadoSerializer
+from .utils import render_to_pdf,HttpResponse
+from django.views.generic import View
 
 ##Login-------------------------------------
 
@@ -331,7 +333,7 @@ class EmpleadoListView(generics.ListAPIView):
 
 def listar_empleados(request):
     # Realiza una solicitud GET a la API para obtener la lista de empleados
-    response = requests.get('http://localhost:8000/empleados/')
+    response = requests.get('http://localhost:8055/empleados/')
     if response.status_code == 200:
         empleados = response.json()
     else:
@@ -386,3 +388,13 @@ def registrardeventa(request):
     
     return redirect('/deventa')
 
+class reporte_produto(View):
+    def get(self,request,*args,**kwargs):
+        template_name="reporte_producto.html"
+        productos=Producto.objects.all()
+        data={
+            'count':productos.count(),
+            'productos':productos
+        }
+        pdf = render_to_pdf(template_name,data)
+        return HttpResponse(pdf,content_type='application/pdf')
