@@ -1,0 +1,82 @@
+{% extends './Base.html' %}
+{% block title %}Gestion de detalle ventas{% endblock %}
+
+{%block body%}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2> Nuevo detalle de ventas </h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrardeventa" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" id="txtidDetalle" name="txtidDetalle" placeholder="Codigo" class="form-control" readonly></input>
+                    </div>
+                    <div class="form-group mb-3">
+                        <select name="venta" id="venta" class="form-control">
+                            <option value="venta">Seleccionar Venta</option>
+                            {% for venta in ventas %}
+                                <option value="{{ venta.idVenta }}">{{ venta.idVenta }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                    <select name="producto" id="producto" class="form-control">
+                        <option value="producto">Seleccionar Producto</option>
+                        {% for producto in productos %}
+                            <option value="{{ producto.idProducto }}">{{ producto.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" id="numprecio" name="numprecio"  placeholder="Precio" class="form-control"></input>
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" id="numcantidad" name="numcantidad"  placeholder="Cantidad" class="form-control"></input>
+                    </div>
+                    <div class="form-group mb-3"> 
+                        <button type="submit" class="btn btn-success" >Guardar</button>
+                        <button type="reset" class="btn btn-success">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="">
+            <h2>Lista de detalle de ventas</h2>
+        <table class="table align-middle">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Venta</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Monto Total</th>
+                    <th scope="col" colspan="2">Opciones de manejo</th>
+                </tr>
+                    <tbody>
+                        {% for ve in detalleventas %}
+                            <tr>
+                                <td>{{ve.idDetalle}}</td>
+                                <td>{{ve.idVenta}}</td>
+                                <td>{{ve.idProducto}}</td>
+                                <td>{{ve.precio}}</td>
+                                <td>{{ve.cantidad}}</td>
+                                <td>{{ve.montoTotal}}</td>
+                                <td><a href="editardeventa/{{ve.idDetalle}}"><i data-feather="edit">Editar</a></td>
+                                <td><a href="eliminardeventa/{{ve.idDetalle}}" style="color: red;"><i data-feather="trash-2">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </thead>
+             </table>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

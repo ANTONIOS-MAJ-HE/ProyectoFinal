@@ -51,4 +51,12 @@ urlpatterns = [
     
     path('empleados/', EmpleadoListView.as_view(), name='lista-empleados'),  #link del archivo json: http://localhost:8020/empleados/
     path('listar_empleados/', login_required(views.listar_empleados), name='listar_empleados'), #consumo de la api
+
+    ##Detalle venta----------------------------------------
+    path('deventa',views.listardeventa,name='listardeventa'),
+    path('eliminardeventa/<idDetalle>',views.eliminardeventa),
+    path('editardeventa/<idDetalle>',views.editardeventa),
+    path('editdeventa',views.editdeventa),
+    path('registrardeventa',views.registrardeventa),
+
 ]

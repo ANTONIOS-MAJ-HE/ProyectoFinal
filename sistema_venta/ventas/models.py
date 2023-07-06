@@ -101,7 +101,11 @@ class Detalleventa(models.Model):
     idProducto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     precio = models.FloatField()
     cantidad = models.IntegerField()
-    montoTotal = models.FloatField()
+    montoTotal =models.FloatField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.montoTotal = float(self.precio) * int(self.cantidad)
+        super(Detalleventa, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Detalle #{self.idDetalle}"

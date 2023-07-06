@@ -331,7 +331,7 @@ class EmpleadoListView(generics.ListAPIView):
 
 def listar_empleados(request):
     # Realiza una solicitud GET a la API para obtener la lista de empleados
-    response = requests.get('http://localhost:8020/empleados/')
+    response = requests.get('http://localhost:8000/empleados/')
     if response.status_code == 200:
         empleados = response.json()
     else:
@@ -340,5 +340,49 @@ def listar_empleados(request):
     return render(request, 'ListaEmpleados.html', {'empleados': empleados})
 
 
+# Detalle venta-----------------
+def listardeventa(request):
+    deventa_list=Detalleventa.objects.all()
+    context={"detalleventas":deventa_list}
+    return render(request,"GestionDeVenta.html",context)
 
+def eliminardeventa(request, idDetalle):
+
+    deventa = Detalleventa.objects.get(idDetalle=idDetalle)
+    deventa.delete()
+    return redirect('/deventa')
+
+def editardeventa(request,idDetalle):
+
+    deventa_list=Detalleventa.objects.get(idDetalle=idDetalle)
+    
+    return render(request, "DeVentaEditar.html",{"deventas":deventa_list})
+
+def editdeventa(request):
+
+    idDetalle= request.POST["txtidDetalle"]
+    precio = request.POST["numprecio"]
+    cantidad = request.POST["numcantidad"]
+    montoTotal = request.POST["nummonto"]
+
+    deventa_list=Detalleventa.objects.get(idDetalle=idDetalle)
+
+    deventa_list.precio = precio
+    deventa_list.cantidad = cantidad
+    deventa_list.montoTotal = montoTotal
+    deventa_list.save()
+
+    return redirect('/deventa')
+
+def registrardeventa(request):
+     
+    idDetalle = request.POST["txtidDetalle"]
+    idVenta = request.POST["venta"]
+    idProducto = request.POST["producto"]
+    precio = request.POST["numprecio"]
+    cantidad= request.POST["numcantidad"]
+    
+    deventa_list=Detalleventa.objects.create(idDetalle=idDetalle,precio = precio,  cantidad=cantidad)
+    
+    return redirect('/deventa')
 
