@@ -1,0 +1,89 @@
+{% extends './Base.html' %}
+
+{% block title %}Registrar Cliente{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Registrar Cliente</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarcliente/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name=idCliente" 
+                        id="idCliente" placeholder="idCliente">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="nombres" 
+                        id="nombres" placeholder="Nombres">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" name="apellidos"  
+                        id="apellidos" placeholder="Apellidos">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" name="dni" class="form-control"
+                        id="dni"  placeholder="DNI">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" name="direccion" class="form-control"
+                        id="direccion" placeholder="Dirección">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" name="telefono" class="form-control"
+                        id="telefono" placeholder="Teléfono">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="email" class="form-control" name="correo"  
+                        id="correo" placeholder="Correo electrónico">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="reset" class="btn btn-success">Limpiar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <div class="">
+            <h2>Lista de Clientes</h2>
+            <table class="table align-middle">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th scope="col">idCliente</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">DNI</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col" colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in clientes %}
+                    <tr class="text-center">
+                        <td>{{ c.idCliente}}</td>
+                        <td>{{ c.nombres }}</td>
+                        <td>{{ c.apellidos }}</td>
+                        <td>{{ c.dni }}</td>
+                        <td>{{ c.dirección }}</td>
+                        <td>{{ c.teléfono }}</td>
+                        <td>{{ c.correo }}</td>
+                        <td> 
+                            <i class="bi bi-trash3"></i>
+                            <a href="editarcliente/{{ c.idCliente }}"><i data-feather="edit"></i></a>
+                            <a href="eliminarcliente/{{ c.idCliente }}" style="color: red;"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

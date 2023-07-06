@@ -250,6 +250,75 @@ def eliminar_pago(request, idPago):
     return redirect('listado_pago')
 
 
+# ---------------------CLIENTES-------------
+
+def clientes(request):
+    cliente_list = Cliente.objects.all()
+    return render(request, "ClienteListado.html", {"clientes": cliente_list})
+
+
+def listado_cliente(request):
+    cliente_list = Cliente.objects.all()
+    return render(request, "ClienteRegistro.html", {"clientes": cliente_list})
+
+def registrarcliente(request):
+    if request.method == "POST":
+        nombres = request.POST.get("nombres")
+        apellidos = request.POST.get("apellidos")
+        dni = request.POST.get("dni")
+        direccion = request.POST.get("direccion")
+        telefono = request.POST.get("telefono")
+        correo = request.POST.get("correo")
+
+        cliente = Cliente.objects.create(
+            nombres=nombres,
+            apellidos=apellidos,
+            dni=dni,
+            dirección=direccion,
+            teléfono=telefono,
+            correo=correo
+        )
+
+        return render(
+            request,
+            'ClienteRegistro.html',
+            {"cliente": cliente}
+        )
+    else:
+        return render(
+            request,
+            "ClienteRegistro.html"
+        )
+
+
+def eliminar_cliente(request, idCliente):
+    cliente = Cliente.objects.get(idCliente=idCliente)
+    cliente.delete()
+    return redirect('/clientes/')
+
+
+def  editar_cliente(request, idCliente):
+    cliente = get_object_or_404(Cliente, idCliente=idCliente)
+
+    if request.method == 'POST':
+        nombres = request.POST["nombres"]
+        apellidos = request.POST["apellidos"]
+        dni = request.POST["dni"]
+        direccion = request.POST["direccion"]
+        telefono = request.POST["telefono"]
+        correo = request.POST["correo"]
+
+        cliente.nombres = nombres
+        cliente.apellidos = apellidos
+        cliente.dni = dni
+        cliente.dirección = direccion
+        cliente.teléfono = telefono
+        cliente.correo = correo
+
+        cliente.update(nombres = nombres,apellidos = apellidos,dni = dni,dirección = direccion,teléfono = telefono,correo = correo)
+        return redirect('/')
+
+    return render(request, 'ClienteEditar.html', {'cliente': cliente})
 
 
 

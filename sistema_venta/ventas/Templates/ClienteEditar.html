@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Cliente{% endblock %}
+
+{% block content %}
+<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+    <h2>Editar Cliente</h2>
+    <div class="card">
+        <div class="card-body">
+            <form action="dtclientes/editarcliente/{{ cliente.idCliente }}/" method="POST">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="idCliente">ID Cliente:</label>
+                    <input type="text" class="form-control" name="idCliente" id="idCliente" value="{{ cliente.idCliente }}" readonly>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" class="form-control" name="nombres" id="nombres" value="{{ cliente.nombres }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellidos" id="apellidos" value="{{ cliente.apellidos }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="dni">DNI:</label>
+                    <input type="text" class="form-control" name="dni" id="dni" value="{{ cliente.dni }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion" id="direccion" value="{{ cliente.dirección }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" class="form-control" name="telefono" id="telefono" value="{{ cliente.teléfono }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="correo">Correo:</label>
+                    <input type="text" class="form-control" name="correo" id="correo" value="{{ cliente.correo }}">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+                    <button type="reset" class="btn btn-secondary">Restablecer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

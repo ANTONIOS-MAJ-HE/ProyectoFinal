@@ -34,4 +34,17 @@ urlpatterns = [
     path('pagos/registrar/', login_required(views.registrar_pago), name='registrar_pago'),
     path('pagos/eliminar/<int:idPago>/', login_required(views.eliminar_pago), name='eliminar_pago'),
     path('pagos/editar/<int:id_pago>/', login_required(views.editar_pago), name='editar_pago'),
+
+     ##clientes--------------------------------------
+
+    path('dtclientes/', login_required(views.listado_cliente), name='clientes'),
+    path('clientes/', login_required(views.clientes), name='clientes'),
+    path('registrarcliente/', login_required(views.registrarcliente), name='registrar_cliente'),
+    path('clientes/eliminarcliente/<int:idCliente>/', login_required(views.eliminar_cliente), name='eliminar_cliente'),
+    path('clientes/editarcliente/<int:idCliente>/', login_required(views.editar_cliente), name='editar_cliente'),
+  
+    path('dtclientes/eliminarcliente/<int:idCliente>/', login_required(views.eliminar_cliente), name='eliminar_cliente'),
+    path('dtclientes/editarcliente/<int:idCliente>/', login_required(views.editar_cliente), name='editar_cliente'),
+ 
+
 ]

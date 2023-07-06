@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+
+{% block title %}Lista de Clientes{% endblock %}
+
+{% block body %}
+
+<div>
+    <div>
+        <h2>Lista de Clientes</h2>
+
+        <div class="mb-3 row">
+            <form method="POST">
+                {% csrf_token %}
+                <label for="txtnombre" class="col-sm-2 col-form-label text-center">Buscar cliente</label>
+                <div class="col-sm-10">
+
+                <input type="text" class="form-control" name="buscar" value="{{request.POST.buscar}}">
+                </div>
+                <div>
+                    <button type="submit"><i data-feather="search"></i></button>
+                </div>
+            </form>
+          </div>
+    </div>
+    {% if clientes %}
+    <div>
+        <table class="table align-middle">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col" colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in clientes %}
+                <tr class="text-center">
+                    <th scope="row">{{c.idCliente}}</th>
+                        <td>{{ c.nombres }}</td>
+                        <td>{{ c.apellidos }}</td>
+                        <td>{{ c.dni }}</td>
+                        <td>{{ c.dirección }}</td>
+                        <td>{{ c.teléfono }}</td>
+                        <td>{{ c.correo }}</td>
+                        <td>
+                        <a href="editarcliente/{{c.idCliente}}"><i data-feather="edit"></i></a>
+                        <a href="eliminarcliente/{{c.idCliente}}" style="color: red;"><i data-feather="trash-2"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <h1>No hay registros</h1>
+    {% endif %}
+</div>
+
+{% endblock %}
