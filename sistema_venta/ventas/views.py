@@ -7,6 +7,9 @@ from django.db.models import Q
 from datetime import datetime
 from django.contrib import messages
 from .forms import PagoForm
+import requests
+from rest_framework import generics
+from .serializers import EmpleadoSerializer
 
 ##Login-------------------------------------
 
@@ -41,7 +44,7 @@ def signin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/profile') #profile
+            return redirect('/') #profile
         else:
             msg = 'Error Credenciales'
             form = AuthenticationForm(request.POST)
@@ -55,7 +58,7 @@ def profile(request):
    
 def signout(request):
     logout(request)
-    return redirect('/profile')
+    return redirect('/')
 
 ##Productos--------------------------------
 
@@ -320,8 +323,21 @@ def  editar_cliente(request, idCliente):
 
     return render(request, 'ClienteEditar.html', {'cliente': cliente})
 
+#listado de empleados por API
 
+class EmpleadoListView(generics.ListAPIView):
+    queryset = Empleado.objects.all()
+    serializer_class = EmpleadoSerializer
 
+def listar_empleados(request):
+    # Realiza una solicitud GET a la API para obtener la lista de empleados
+    response = requests.get('http://localhost:8020/empleados/')
+    if response.status_code == 200:
+        empleados = response.json()
+    else:
+        empleados = []
+
+    return render(request, 'ListaEmpleados.html', {'empleados': empleados})
 
 
 

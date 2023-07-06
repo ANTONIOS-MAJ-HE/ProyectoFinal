@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.decorators import login_required
+from .views import EmpleadoListView
 
 app_name = 'ventas'
 urlpatterns = [
@@ -10,7 +11,7 @@ urlpatterns = [
     
     path('signin/', views.signin, name='signin'),
     path('signup/', views.signup, name='signup'),
-    path('profile/', views.profile, name='profile'),
+    path('', views.profile, name='profile'),
     path('signout/', views.signout, name='signout'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='Profile.html'), name='profile'),
     
@@ -35,7 +36,7 @@ urlpatterns = [
     path('pagos/eliminar/<int:idPago>/', login_required(views.eliminar_pago), name='eliminar_pago'),
     path('pagos/editar/<int:id_pago>/', login_required(views.editar_pago), name='editar_pago'),
 
-     ##clientes--------------------------------------
+    ##clientes--------------------------------------
 
     path('dtclientes/', login_required(views.listado_cliente), name='clientes'),
     path('clientes/', login_required(views.clientes), name='clientes'),
@@ -46,5 +47,8 @@ urlpatterns = [
     path('dtclientes/eliminarcliente/<int:idCliente>/', login_required(views.eliminar_cliente), name='eliminar_cliente'),
     path('dtclientes/editarcliente/<int:idCliente>/', login_required(views.editar_cliente), name='editar_cliente'),
  
-
+    ##empleados API--------------------------------------
+    
+    path('empleados/', EmpleadoListView.as_view(), name='lista-empleados'),  #link del archivo json: http://localhost:8020/empleados/
+    path('listar_empleados/', login_required(views.listar_empleados), name='listar_empleados'), #consumo de la api
 ]

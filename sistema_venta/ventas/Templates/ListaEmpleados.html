@@ -1,0 +1,37 @@
+{% extends 'Base.html' %}
+{% block title %}Listado de Productos{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block body %}
+    <h2>Lista de empleados</h2>
+    <table class="table align-middle">
+        <thead class="table-dark">
+            <tr class="text-center">
+              <th scope="col">ID</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Apellidos</th>
+              <th scope="col">DNI</th>
+              <th scope="col">Dirección</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col">Correo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for empleado in empleados %}
+            <tr class="text-center">
+              <td>{{ empleado.idEmpleado }}</td>
+              <td>{{ empleado.nombres }}</td>
+              <td>{{ empleado.apellidos }}</td>
+              <td>{{ empleado.dni }}</td>
+              <td>{{ empleado.dirección }}</td>
+              <td>{{ empleado.teléfono }}</td>
+              <td>{{ empleado.correo }}</td>
+            </tr>
+            {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}
